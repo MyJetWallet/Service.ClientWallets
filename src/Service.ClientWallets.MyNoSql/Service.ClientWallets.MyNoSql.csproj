@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MyJetWallet.Domain" Version="1.0.5" />
+    <PackageReference Include="MyNoSqlServer.DataWriter" Version="1.2.23" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Service.ClientWallets.Domain.Models\Service.ClientWallets.Domain.Models.csproj" />
+  </ItemGroup>
+
+</Project>
