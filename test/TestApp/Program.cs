@@ -16,7 +16,7 @@ namespace TestApp
             Console.ReadLine();
 
 
-            var factory = new ClientWalletsClientFactory("http://localhost:5001");
+            //var factory = new ClientWalletsClientFactory("http://localhost:5001");
             
 
             Console.WriteLine("End");
