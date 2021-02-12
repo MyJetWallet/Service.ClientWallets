@@ -14,7 +14,7 @@ namespace Service.ClientWallets.Client
         ///   * IAssetsDictionaryClient
         ///   * ISpotInstrumentDictionaryClient
         /// </summary>
-        public static void RegisterAssetsDictionaryClients(this ContainerBuilder builder, IMyNoSqlSubscriber myNoSqlSubscriber, string clientWalletsGrpcServiceUrl)
+        public static void RegisterClientWalletsClients(this ContainerBuilder builder, IMyNoSqlSubscriber myNoSqlSubscriber, string clientWalletsGrpcServiceUrl)
         {
             var subs = new MyNoSqlReadRepository<ClientWalletNoSqlEntity>(myNoSqlSubscriber, ClientWalletNoSqlEntity.TableName);
 

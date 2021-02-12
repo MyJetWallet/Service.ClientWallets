@@ -7,3 +7,16 @@
 ![CI test build](https://github.com/MyJetWallet/Service.ClientWallets/workflows/CI%20test%20build/badge.svg)
 
 *Client library:* ![Nuget version](https://img.shields.io/nuget/v/MyJetWallet.Service.ClientWallets.Client?label=MyJetWallet.Service.ClientWallets.Client&style=social)
+
+
+# Usage
+
+```csharp
+
+MyNoSqlTcpClient myNoSqlTcpClient;
+
+builder.RegisterClientWalletsClients(myNoSqlTcpClient, clientWalletsGrpcServiceUrl)
+```
+
+Interface:
+* `IClientWalletService`
