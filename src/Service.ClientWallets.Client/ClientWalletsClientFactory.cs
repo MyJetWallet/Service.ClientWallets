@@ -25,6 +25,9 @@ namespace Service.ClientWallets.Client
             _channel = channel.Intercept(new PrometheusMetricsInterceptor());
         }
 
-        public IClientWalletService ClientWalletService() => new NoSqlClientWalletService(_channel.CreateGrpcService<IClientWalletService>(), _reader);
+        public IClientWalletService ClientWalletService() => 
+            _reader != null 
+                ? new NoSqlClientWalletService(_channel.CreateGrpcService<IClientWalletService>(), _reader)
+                : _channel.CreateGrpcService<IClientWalletService>();
     }
 }
