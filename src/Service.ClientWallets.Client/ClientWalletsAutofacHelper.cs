@@ -33,9 +33,7 @@ namespace Service.ClientWallets.Client
         /// </summary>
         public static void RegisterClientWalletsClientsWithoutCache(this ContainerBuilder builder, string clientWalletsGrpcServiceUrl)
         {
-            var subs = new MyNoSqlReadRepository<ClientWalletNoSqlEntity>(null, ClientWalletNoSqlEntity.TableName);
-
-            var factory = new ClientWalletsClientFactory(clientWalletsGrpcServiceUrl, subs);
+            var factory = new ClientWalletsClientFactory(clientWalletsGrpcServiceUrl, null);
 
             builder
                 .RegisterInstance(factory.ClientWalletService())
