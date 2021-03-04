@@ -69,7 +69,7 @@ namespace Service.ClientWallets.Services
 
             return new ClientWalletList()
             {
-                Wallets = list.Cast<ClientWallet>().ToList()
+                Wallets = list.Select(e => new ClientWallet(){IsDefault = e.IsDefault, Name = e.Name, WalletId = e.WalletId}).ToList()
             };
         }
 
