@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using MyJetWallet.Domain;
+using MyJetWallet.Sdk.Service;
 using MyNoSqlServer.Abstractions;
 using Service.ClientWallets.Domain.Models;
 using Service.ClientWallets.Grpc;
@@ -32,7 +33,11 @@ namespace Service.ClientWallets.Services
             _logger.LogInformation("Request wallets for Broker/Brand/Client: {brokerId}/{brandId}/{clientId}",  
                 clientId.BrokerId, clientId.BrandId, clientId.ClientId);
 
+            clientId.BrokerId.AddToActivityAsTag("brokerId");
+            clientId.ClientId.AddToActivityAsTag("clientId");
+            
 
+            using var activity = MyTelemetry.StartActivity($"Use DB context {DatabaseContext.Schema}")?.AddTag("db-schema", DatabaseContext.Schema);
             await using var ctx = new DatabaseContext(_dbContextOptionsBuilder.Options);
 
             var list = await ctx.ClientWallet.Where(e => e.BrokerId == clientId.BrokerId && e.ClientId == clientId.ClientId)
@@ -40,12 +45,15 @@ namespace Service.ClientWallets.Services
 
             if (!list.Any())
             {
+                using var _ = MyTelemetry.StartActivity($"Create a new wallet");
                 var wallet = new ClientWallet()
                 {
                     IsDefault = true,
                     Name = "spot",
                     WalletId = GenerateDefaultWalletId(clientId.ClientId)
                 };
+
+                wallet.WalletId.AddToActivityAsTag("walletId");
 
                 var entity = new ClientWalletEntity(clientId.BrokerId, clientId.BrandId, clientId.ClientId, wallet);
 

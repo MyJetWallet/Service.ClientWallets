@@ -16,5 +16,8 @@ namespace Service.ClientWallets.Settings
 
         [YamlProperty("ClientWallets.WalletPrefix")]
         public string WalletPrefix { get; set; }
+
+        [YamlProperty("ClientWallets.ZipkinUrl")]
+        public string ZipkinUrl { get; set; }
     }
 }
