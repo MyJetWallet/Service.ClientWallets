@@ -140,8 +140,8 @@ namespace Service.ClientWallets.Services
 
             var data = await ctx.ClientWallet
                 .Where(e => e.ClientId.Contains(request.SearchText) || e.WalletId.Contains(request.SearchText))
-                .GroupBy(e => e.ClientId)
-                .Select(e => new { ClientId = e.Key, Count = e.Count()})
+                .GroupBy(e => new { e.BrokerId, e.BrandId, e.ClientId} )
+                .Select(e => new { e.Key.BrokerId, e.Key.BrandId, e.Key.ClientId, Count = e.Count()})
                 .Take(request.Take)
                 .ToListAsync();
 
@@ -151,6 +151,8 @@ namespace Service.ClientWallets.Services
             {
                 Clients = data.Select(e => new SearchWallet()
                 {
+                    BrokerId = e.BrokerId,
+                    BrandId = e.BrandId,
                     ClientId = e.ClientId,
                     Count = e.Count
                 }).ToList()
