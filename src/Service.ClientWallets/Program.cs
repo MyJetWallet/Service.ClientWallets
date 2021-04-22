@@ -7,8 +7,8 @@ using Microsoft.AspNetCore.Server.Kestrel.Core;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using MyJetWallet.Sdk.Service;
+using MySettingsReader;
 using Service.ClientWallets.Settings;
-using SimpleTrading.SettingsReader;
 
 namespace Service.ClientWallets
 {
@@ -22,9 +22,9 @@ namespace Service.ClientWallets
         {
             Console.Title = "MyJetWallet Service.ClientWallets";
 
-            Settings = SettingsReader.ReadSettings<SettingsModel>(SettingsFileName);
+            Settings = SettingsReader.GetSettings<SettingsModel>(SettingsFileName);
 
-            using var loggerFactory = LogConfigurator.Configure("MyJetWallet", Settings.SeqServiceUrl);
+            using var loggerFactory = LogConfigurator.ConfigureElk("MyJetWallet", Settings.SeqServiceUrl, Settings.ElkLogs);
 
             var logger = loggerFactory.CreateLogger<Program>();
 

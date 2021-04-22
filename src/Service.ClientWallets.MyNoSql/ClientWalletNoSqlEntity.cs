@@ -6,7 +6,7 @@ using Service.ClientWallets.Domain.Models;
 
 namespace Service.ClientWallets.MyNoSql
 {
-    public class ClientWalletNoSqlEntity: MyNoSqlDbEntity, IJetWalletIdentity
+    public class ClientWalletNoSqlEntity: MyNoSqlDbEntity
     {
         public const string TableName = "myjetwallet-clietwallet-cache";
 
@@ -17,7 +17,6 @@ namespace Service.ClientWallets.MyNoSql
         public string BrokerId { get; set; }
         public string BrandId { get; set; }
         public string ClientId { get; set; }
-        public string WalletId { get; set; }
 
         public List<ClientWallet> Wallets { get; set; }
 

@@ -9,6 +9,7 @@ using MyJetWallet.Sdk.GrpcMetrics;
 using MyJetWallet.Sdk.GrpcSchema;
 using MyJetWallet.Sdk.Postgres;
 using MyJetWallet.Sdk.Service;
+using MySettingsReader;
 using Prometheus;
 using ProtoBuf.Grpc.Server;
 using Service.ClientWallets.Grpc;
@@ -18,7 +19,6 @@ using Service.ClientWallets.Services;
 using Service.ClientWallets.Settings;
 using SimpleTrading.BaseMetrics;
 using SimpleTrading.ServiceStatusReporterConnector;
-using SimpleTrading.SettingsReader;
 
 namespace Service.ClientWallets
 {
@@ -76,7 +76,7 @@ namespace Service.ClientWallets
 
         private SettingsModel GetSettings()
         {
-            return SettingsReader.ReadSettings<SettingsModel>(Program.SettingsFileName);
+            return SettingsReader.GetSettings<SettingsModel>(Program.SettingsFileName);
         }
     }
 }
