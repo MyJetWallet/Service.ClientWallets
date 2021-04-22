@@ -4,8 +4,7 @@
     <TargetFramework>net5.0</TargetFramework>
     <UserSecretsId>d022dd1b-3dee-48ca-97dd-dbea30c13cf5</UserSecretsId>
     <LangVersion>8.0</LangVersion>
-    <PackageProjectUrl>https://github.com/MyJetWallet/Service.ClientWallets</PackageProjectUrl>
-    <RepositoryUrl>https://github.com/MyJetWallet/Service.ClientWallets</RepositoryUrl>
+    
   </PropertyGroup>
 
   <ItemGroup>

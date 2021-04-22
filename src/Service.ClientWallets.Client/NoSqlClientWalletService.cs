@@ -35,5 +35,10 @@ namespace Service.ClientWallets.Client
         {
             return _grpcService.CreateWalletAsync(request);
         }
+
+        public Task<SearchWalletsResponse> SearchClientsAsync(SearchWalletsRequest request)
+        {
+            return _grpcService.SearchClientsAsync(request);
+        }
     }
 }

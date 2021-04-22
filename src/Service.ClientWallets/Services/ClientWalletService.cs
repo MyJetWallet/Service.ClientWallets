@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json;
 using System.Threading.Tasks;
+using Elasticsearch.Net;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using MyJetWallet.Domain;
@@ -127,6 +128,32 @@ namespace Service.ClientWallets.Services
                 Success = true,
                 Name = request.Name,
                 WalletId = wallet.WalletId
+            };
+        }
+
+        public async Task<SearchWalletsResponse> SearchClientsAsync(SearchWalletsRequest request)
+        {
+            using var activity = MyTelemetry.StartActivity($"Search client");
+            request.AddToActivityAsJsonTag("request");
+
+            await using var ctx = new DatabaseContext(_dbContextOptionsBuilder.Options);
+
+            var data = await ctx.ClientWallet
+                .Where(e => e.ClientId.Contains(request.SearchText) || e.WalletId.Contains(request.SearchText))
+                .GroupBy(e => e.ClientId)
+                .Select(e => new { ClientId = e.Key, Count = e.Count()})
+                .Take(request.Take)
+                .ToListAsync();
+
+            data.Count.AddToActivityAsTag("result-count");
+
+            return new SearchWalletsResponse()
+            {
+                Clients = data.Select(e => new SearchWallet()
+                {
+                    ClientId = e.ClientId,
+                    Count = e.Count
+                }).ToList()
             };
         }
 
