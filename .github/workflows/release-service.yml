@@ -55,7 +55,7 @@ jobs:
     - name: get uat kube yamls
       uses: actions/checkout@v2
       with:
-        repository: https://github.com/MyJetWallet/kubernates-infrastructure
+        repository: MyJetWallet/kubernates-infrastructure
         ref: master
         path: './kube'
         
