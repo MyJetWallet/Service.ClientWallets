@@ -16,14 +16,6 @@ jobs:
       with:
         dotnet-version: 5.0.101
 
-    - name: get uat kube yamls
-      uses: actions/checkout@v2
-      with:
-        repository: MyJetWallet/kubernates-infrastructure
-        ref: master
-        path: './kube'
-        token: ${{ secrets.UAT_GIT_TOKEN }}
-
     - name: Get current time
       uses: MyJetTools/get-current-time@v2
       id: current-time
@@ -63,14 +55,19 @@ jobs:
         tag_with_ref: true
         build_args: app_version=myjetwallet.service.clientwallets:${{ steps.extract_branch.outputs.branch }},app_compilation_date=${{ steps.current-time.outputs.formattedTime }}
        
-    - name: change version
-      run: |
-        ls
-        сd kube
+
+update_version:
+    runs-on: ubuntu-latest
+    steps:
+    - name: get uat kube yamls
+      uses: actions/checkout@v2
+      with:
+        repository: MyJetWallet/kubernates-infrastructure
+        ref: master        
+        token: ${{ secrets.UAT_GIT_TOKEN }}
+    - run: |
         find . -type f -name "deployment.*" -print0 -exec sed -i -r 's/docker.pkg.github.com\/${{ secrets.ORG_NAME }}\/service.clientwallets\/myjetwallet.service.client-wallets:.*$/docker.pkg.github.com\/${{ secrets.ORG_NAME }}\/service.clientwallets\/myjetwallet.service.client-wallets-test:${GITHUB_REF#refs/tags/}/g' {} \;
         git config user.name github-actions
         git config user.email github-actions@github.com
         git commit -m "Update version of service.clientwallets"
-
-
-
+        git push
