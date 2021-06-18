@@ -58,6 +58,7 @@ jobs:
         repository: MyJetWallet/kubernates-infrastructure
         ref: master
         path: './kube'
+        token: ${{ secrets.UAT_GIT_TOKEN }}
         
     - name: test kube
       run: |
