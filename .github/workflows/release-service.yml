@@ -28,7 +28,10 @@ jobs:
     - name: Test
       run: dotnet test --no-build --configuration Release
     - name: ls
-      run: ls
+      run: |
+        ls
+        cd src
+        cd ..
 
     - name: Publish Service
       run: dotnet publish ./src/Service.ClientWallets/Service.ClientWallets.csproj --configuration Release /p:AssemblyVersion=${GITHUB_REF#refs/tags/} --output ./publish-api
