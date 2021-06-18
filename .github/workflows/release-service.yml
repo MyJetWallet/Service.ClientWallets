@@ -66,8 +66,8 @@ jobs:
         ref: master        
         token: ${{ secrets.UAT_GIT_TOKEN }}
     - run: |
-        pattern=docker.pkg.github.com\\/${{ secrets.ORG_NAME }}\\/service.clientwallets\\/myjetwallet.service.client-wallets-test:.*$
-        imagename=docker.pkg.github.com\\/${{ secrets.ORG_NAME }}\\/service.clientwallets\\/myjetwallet.service.client-wallets-test:${GITHUB_REF#refs/tags/}
+        pattern=docker.pkg.github.com\\/${{ secrets.ORG_NAME }}\\/service.clientwallets\\/myjetwallet.service.client-wallets:.*$
+        imagename=docker.pkg.github.com\\/${{ secrets.ORG_NAME }}\\/service.clientwallets\\/myjetwallet.service.client-wallets:${GITHUB_REF#refs/tags/}
         reg=$"s/${pattern}/${imagename}/g"
         echo $reg
         find . -type f -name "deployment.*" -print0 -exec sed -i -r $reg {} \;
