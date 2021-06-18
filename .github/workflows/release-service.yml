@@ -55,8 +55,8 @@ jobs:
         tag_with_ref: true
         build_args: app_version=myjetwallet.service.clientwallets:${{ steps.extract_branch.outputs.branch }},app_compilation_date=${{ steps.current-time.outputs.formattedTime }}
        
-
-update_version:
+  update_version:
+    needs: build
     runs-on: ubuntu-latest
     steps:
     - name: get uat kube yamls
