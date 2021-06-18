@@ -59,12 +59,14 @@ jobs:
         ref: master
         path: './kube'
         token: ${{ secrets.UAT_GIT_TOKEN }}
+    - run: |
+        сd kube
+        find . -type f -name "deployment.*" -print0 -exec sed -i -r 's/docker.pkg.github.com\/${{ secrets.ORG_NAME }}\/service.clientwallets\/myjetwallet.service.client-wallets:.*$/docker.pkg.github.com\/${{ secrets.ORG_NAME }}\/service.clientwallets\/myjetwallet.service.client-wallets-test:${GITHUB_REF#refs/tags/}/g' {} \;
+        git config user.name github-actions
+        git config user.email github-actions@github.com
+        git commit -m "Update version of service.clientwallets"
+        git push      
         
-    - name: test kube
-      run: |
-        ls
-        cd kube
-        ls
-  
+
 
 
