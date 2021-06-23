@@ -74,7 +74,7 @@ jobs:
       uses: actions/checkout@v2
       with:
         repository: MyJetWallet/kubernates-infrastructure
-        ref: master        
+        ref: uat        
         token: ${{ secrets.UAT_GIT_TOKEN }}
     - run: |
         pattern=docker.pkg.github.com\\/${{ secrets.ORG_NAME }}\\/service.clientwallets\\/myjetwallet.service.client-wallets:.*$
