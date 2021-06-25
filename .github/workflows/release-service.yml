@@ -62,9 +62,9 @@ jobs:
         password: ${{ secrets.ST_DOCKER_PASSWORD }}
         path: ./publish-api
         registry: simpletrading.azurecr.io
-        repository: spot/myjetwallet.service.clientwallets
+        repository: spot/myjetwallet.service.client-wallets-test
         tag_with_ref: true
-        build_args: app_version=myjetwallet.service.clientwallets:${{ steps.extract_branch.outputs.branch }},app_compilation_date=${{ steps.current-time.outputs.formattedTime }}
+        build_args: app_version=myjetwallet.service.client-wallets-test:${{ steps.extract_branch.outputs.branch }},app_compilation_date=${{ steps.current-time.outputs.formattedTime }}
 
   update_version:
     needs: build
