@@ -62,9 +62,9 @@ jobs:
         password: ${{ secrets.ST_DOCKER_PASSWORD }}
         path: ./publish-api
         registry: simpletrading.azurecr.io
-        repository: spot/myjetwallet.service.client-wallets-test
+        repository: spot/myjetwallet.service.client-wallets
         tag_with_ref: true
-        build_args: app_version=myjetwallet.service.client-wallets-test:${{ steps.extract_branch.outputs.branch }},app_compilation_date=${{ steps.current-time.outputs.formattedTime }}
+        build_args: app_version=myjetwallet.service.client-wallets:${{ steps.extract_branch.outputs.branch }},app_compilation_date=${{ steps.current-time.outputs.formattedTime }}
 
   update_version:
     needs: build
@@ -77,12 +77,12 @@ jobs:
         ref: uat        
         token: ${{ secrets.UAT_GIT_TOKEN }}
     - run: |
-        pattern=docker.pkg.github.com\\/${{ secrets.ORG_NAME }}\\/service.clientwallets\\/myjetwallet.service.client-wallets:.*$
-        imagename=docker.pkg.github.com\\/${{ secrets.ORG_NAME }}\\/service.clientwallets\\/myjetwallet.service.client-wallets:${GITHUB_REF#refs/tags/}
+        pattern=myjetwallet.service.client-wallets:.*$
+        imagename=myjetwallet.service.client-wallets:${GITHUB_REF#refs/tags/}
         reg=$"s/${pattern}/${imagename}/g"
         echo $reg
         find . -type f -name "deployment.*" -print0 -exec sed -i -r $reg {} \;
         git config user.name github-actions
         git config user.email github-actions@github.com
-        git commit -a -m "Update version of service.clientwallets"
+        git commit -a -m "Update version of service myjetwallet.service.client-wallets"
         git push
